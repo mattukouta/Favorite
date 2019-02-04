@@ -29,8 +29,7 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         listView = layout.findViewById(R.id.listView);
-        this.context = getContext();
-        listAdapter = new ListAdapter(context);
+        listAdapter = new ListAdapter(ListFragment.this);
         listView.setAdapter(listAdapter);
 
 
