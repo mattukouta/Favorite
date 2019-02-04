@@ -6,4 +6,6 @@
 
     <color name="white">#ffffff</color>
     <color name="tabText">#647369</color>
+
+    <color name="favoritebutton">#ffcc66</color>
 </resources>
