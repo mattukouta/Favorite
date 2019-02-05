@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +27,7 @@ public class ListFragment extends Fragment {
 
     private ListView listView;
     private ListAdapter listAdapter;
+    private AddDialog addDialog;
 
     public ListFragment() {
     }
@@ -55,11 +55,9 @@ public class ListFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.rename:
-                                Toast.makeText(getContext(), String.valueOf(position)+ "名前変えます", Toast.LENGTH_SHORT).show();
-                                Rename();
+                                Rename(position);
                                 break;
                             case R.id.delete:
-                                Toast.makeText(getContext(), String.valueOf(position)+ "削除します", Toast.LENGTH_SHORT).show();
                                 Delete(position);
                                 break;
                         }
@@ -83,7 +81,39 @@ public class ListFragment extends Fragment {
     }
 
     //popmenuの項目名変更部分
-    public void Rename() {
+    public void Rename(final int position) {
+        addDialog = new AddDialog(getContext(), getResources().getString(R.string.rename_dialog_title), getResources().getString(R.string.rename_dialog_subtitle)
+                , getResources().getString(R.string.rename_dialog_ok), getResources().getString(R.string.rename_dialog_cancel));
+
+        final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        addDialog.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDialog.dismiss();
+            }
+        });
+
+        addDialog.ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = String.valueOf(addDialog.editText.getText());
+                final Gson gson = new Gson();
+                final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
+                Log.d("checkjson",jsonList);
+                ArrayList arrayList = gson.fromJson(jsonList, new TypeToken<ArrayList<String>>(){}.getType());
+                arrayList.set(position,text);
+                ListArray.list = arrayList;
+                String str = gson.toJson(arrayList);
+                pre.edit().putString("Submit/List",str).apply();
+
+                addDialog.dismiss();
+            }
+        });
+
+        addDialog.setCancelable(false);
+        addDialog.setCanceledOnTouchOutside(true);
+        addDialog.show();
     }
 
     //popmenuの削除部分

@@ -9,4 +9,8 @@
     <string name="add_dialog_cancel">キャンセルする</string>
     <string name="rename">名前を変更する</string>
     <string name="delete">リストから削除する</string>
+    <string name="rename_dialog_title">項目名の変更</string>
+    <string name="rename_dialog_subtitle">変更後の名前を入力してください</string>
+    <string name="rename_dialog_ok">決定する</string>
+    <string name="rename_dialog_cancel">キャンセルする</string>
 </resources>
