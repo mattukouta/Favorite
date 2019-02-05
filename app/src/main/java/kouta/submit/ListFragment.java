@@ -1,6 +1,8 @@
 package kouta.submit;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+
+import kouta.submit.data.IdArray;
+import kouta.submit.data.ListArray;
 
 public class ListFragment extends Fragment {
 
@@ -34,7 +44,7 @@ public class ListFragment extends Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 //                Toast.makeText(getContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
                 PopupMenu popup = new PopupMenu(getContext(),view);
                 MenuInflater menuInflater = popup.getMenuInflater();
@@ -46,10 +56,12 @@ public class ListFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.rename:
-                                Toast.makeText(getContext(), "名前変えます", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), String.valueOf(position)+ "名前変えます", Toast.LENGTH_SHORT).show();
+                                Rename();
                                 break;
                             case R.id.delete:
-                                Toast.makeText(getContext(), "削除します", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), String.valueOf(position)+ "削除します", Toast.LENGTH_SHORT).show();
+                                Delete(position);
                                 break;
                         }
                         return false;
@@ -62,5 +74,28 @@ public class ListFragment extends Fragment {
 
         return layout;
 
+    }
+
+    public void Rename() {
+    }
+
+    public void Delete(int position) {
+        final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final Gson gson = new Gson();
+        final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
+        ArrayList arrayList = gson.fromJson(jsonList, new TypeToken<ArrayList<String>>(){}.getType());
+        arrayList.remove(position);
+        Log.d("checklist", String.valueOf(arrayList));
+        ListArray.list = arrayList;
+        String str1 = gson.toJson(arrayList);
+        pre.edit().putString("Submit/List",str1).apply();
+
+        final String jsonId = pre.getString("Submit/Id", "[]");
+        ArrayList arrayId = gson.fromJson(jsonId, new TypeToken<ArrayList<String>>(){}.getType());
+        arrayId.remove(String.valueOf(position));
+        Log.d("checklist", String.valueOf(arrayId));
+        IdArray.id = arrayId;
+        String str2 = gson.toJson(arrayId);
+        pre.edit().putString("Submit/Id",str2).apply();
     }
 }
