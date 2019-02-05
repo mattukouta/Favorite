@@ -4,22 +4,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-
+import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
-
 import kouta.submit.data.IdArray;
 import kouta.submit.data.ListArray;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private AddDialog addDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(toolbar);
 
         loadFragment(new ListFragment());
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(this);
 
     }
 
@@ -74,5 +79,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.fab) {
+            AddDialog();
+        }
+    }
+    private void AddDialog() {
+        addDialog = new AddDialog(this, getResources().getString(R.string.add_dialog_title), getResources().getString(R.string.add_dialog_subtitle)
+                , getResources().getString(R.string.add_dialog_ok), getResources().getString(R.string.add_dialog_cancel));
+
+        addDialog.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDialog.dismiss();
+            }
+        });
+
+        addDialog.ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDialog.dismiss();
+            }
+        });
+
+        addDialog.setCancelable(false);
+        addDialog.setCanceledOnTouchOutside(true);
+        addDialog.show();
     }
 }
