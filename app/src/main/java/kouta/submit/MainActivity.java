@@ -109,12 +109,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
                 Log.d("checkjson",jsonList);
                 ArrayList arrayList = gson.fromJson(jsonList, new TypeToken<ArrayList<String>>(){}.getType());
-                arrayList.add(text);
-                ListArray.list = arrayList;
-                String str = gson.toJson(arrayList);
-                pre.edit().putString("Submit/List",str).apply();
+                if (!text.isEmpty()) {
+                    arrayList.add(text);
+                    ListArray.list = arrayList;
+                    String str = gson.toJson(arrayList);
+                    pre.edit().putString("Submit/List", str).apply();
 
-                addDialog.dismiss();
+                    addDialog.dismiss();
+                }
             }
         });
 
