@@ -83,7 +83,7 @@ public class ListFragment extends Fragment {
     //popmenuの項目名変更部分
     public void Rename(final int position) {
         addDialog = new AddDialog(getContext(), getResources().getString(R.string.rename_dialog_title), getResources().getString(R.string.rename_dialog_subtitle)
-                , getResources().getString(R.string.rename_dialog_ok), getResources().getString(R.string.rename_dialog_cancel));
+                , getResources().getString(R.string.rename_dialog_ok), getResources().getString(R.string.rename_dialog_cancel), getResources().getString(R.string.rename_dialog_hint));
 
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
 
