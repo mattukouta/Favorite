@@ -1,8 +1,8 @@
 package kouta.submit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -10,10 +10,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class FavoriteFragment extends Fragment {
+
+    private ListView listView;
+    private FavoriteAdapter favoriteAdapter;
+    private Context context;
 
     public FavoriteFragment() {
     }
@@ -24,12 +28,22 @@ public class FavoriteFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_favorite, container, false);
         super.onCreate(savedInstanceState);
 
-        SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(layout.getContext());
-        String position = pre.getString("position", "[]");
+        listView = layout.findViewById(R.id.favoriteList);
+        favoriteAdapter = new FavoriteAdapter(FavoriteFragment.this);
+        listView.setAdapter(favoriteAdapter);
 
-        TextView text = layout.findViewById(R.id.hoge);
-        text.setText(position);
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+////                Intent intent = new Intent(this, )
+//                SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
+//                pre.edit().putString("position",String.valueOf(position)).apply();
+//            }
+//        });
 
         return layout;
+
     }
 }

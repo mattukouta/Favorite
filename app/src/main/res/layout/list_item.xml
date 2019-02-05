@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
+        android:paddingLeft="24dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/favButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
