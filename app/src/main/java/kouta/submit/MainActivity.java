@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     private void AddDialog() {
         addDialog = new AddDialog(this, getResources().getString(R.string.add_dialog_title), getResources().getString(R.string.add_dialog_subtitle)
-                , getResources().getString(R.string.add_dialog_ok), getResources().getString(R.string.add_dialog_cancel));
+                , getResources().getString(R.string.add_dialog_ok), getResources().getString(R.string.add_dialog_cancel),getResources().getString(R.string.add_dialog_hint));
 
         addDialog.cancel.setOnClickListener(new View.OnClickListener() {
             @Override

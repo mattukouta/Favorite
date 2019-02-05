@@ -13,7 +13,7 @@ public class AddDialog extends Dialog{
     public Button ok;
     public EditText editText;
 
-    public AddDialog(Context mContext, String mTitle, String mSubtitle, String mOk, String mCancel){
+    public AddDialog(Context mContext, String mTitle, String mSubtitle, String mOk, String mCancel, String mHint){
         super(mContext);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -30,5 +30,6 @@ public class AddDialog extends Dialog{
         subtitle.setText(mSubtitle);
         ok.setText(mOk);
         cancel.setText(mCancel);
+        editText.setHint(mHint);
     }
 }

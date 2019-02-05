@@ -1,16 +1,18 @@
 <resources>
-    <string name="app_name">Submit</string>
+    <string name="app_name">Favorite</string>
     <string name="list">リスト一覧</string>
     <string name="favorite">お気に入り</string>
 
-    <string name="add_dialog_title">リストの追加</string>
-    <string name="add_dialog_subtitle">リストに追加するものを入力してください</string>
-    <string name="add_dialog_ok">追加する</string>
-    <string name="add_dialog_cancel">キャンセルする</string>
+    <string name="add_dialog_title">項目の追加</string>
+    <string name="add_dialog_subtitle">リストに追加する項目を入力してください</string>
+    <string name="add_dialog_ok">追加</string>
+    <string name="add_dialog_cancel">キャンセル</string>
+    <string name="add_dialog_hint">追加する項目名</string>
     <string name="rename">名前を変更する</string>
     <string name="delete">リストから削除する</string>
     <string name="rename_dialog_title">項目名の変更</string>
-    <string name="rename_dialog_subtitle">変更後の名前を入力してください</string>
-    <string name="rename_dialog_ok">決定する</string>
-    <string name="rename_dialog_cancel">キャンセルする</string>
+    <string name="rename_dialog_subtitle">変更後の項目名を入力してください</string>
+    <string name="rename_dialog_hint">変更後の項目名</string>
+    <string name="rename_dialog_ok">決定</string>
+    <string name="rename_dialog_cancel">キャンセル</string>
 </resources>
