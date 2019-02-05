@@ -7,4 +7,6 @@
     <string name="add_dialog_subtitle">リストに追加するものを入力してください</string>
     <string name="add_dialog_ok">追加する</string>
     <string name="add_dialog_cancel">キャンセルする</string>
+    <string name="rename">名前を変更する</string>
+    <string name="delete">リストから削除する</string>
 </resources>
