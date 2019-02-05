@@ -29,10 +29,6 @@ public class ListAdapter extends BaseAdapter {
         this.listFragment = listFragment;
     }
 
-    private static class ViewHolder {
-        public TextView dateText;
-    }
-
     @Override
     public int getCount() {
         return list.length;
@@ -40,7 +36,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return list[position];
     }
 
     @Override
@@ -51,28 +47,22 @@ public class ListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
-        if (convertView == null) {
         LayoutInflater mLayoutInflater = listFragment.getLayoutInflater();
-            convertView = mLayoutInflater.inflate(R.layout.list_item, null);
-            holder = new ViewHolder();
-            holder.dateText = convertView.findViewById(R.id.item_text);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder)convertView.getTag();
-        }
-
+        convertView = mLayoutInflater.inflate(R.layout.list_item,null);
+        TextView dateText = convertView.findViewById(R.id.item_text);
         //↓お気に入りボタンの実装
 
         final ImageButton favButton =convertView.findViewById(R.id.favButton);
 
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
         final Gson gson = new Gson();
-        final String jsonText = pre.getString("favoriteList", "[]");
+        final String jsonText = pre.getString("Submit/FavoriteList", "[]");
         Log.d("checkjson",jsonText);
         ArrayList arrayList = gson.fromJson(jsonText, new TypeToken<ArrayList<Integer>>(){}.getType());
         final int id = Integer.parseInt(String.valueOf(position));
 
+
+        Log.d("checklog", String.valueOf(arrayList));
         if (arrayList.indexOf(id) != -1){
             favButton.setImageResource(R.drawable.ic_favorite_black_48dp);
         }
@@ -81,7 +71,7 @@ public class ListAdapter extends BaseAdapter {
         favButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String jsonTextButton = pre.getString("favoriteList", "[]");
+                String jsonTextButton = pre.getString("Submit/FavoriteList", "[]");
                 final ArrayList favoriteList = gson.fromJson(jsonTextButton, new TypeToken<ArrayList<Integer>>(){}.getType());
                 Log.d("checkfavorite", String.valueOf(favoriteList));
                 Animation animation = AnimationUtils.loadAnimation(finalConvertView.getContext(), R.anim.touch);
@@ -94,12 +84,12 @@ public class ListAdapter extends BaseAdapter {
                             favButton.setImageResource(R.drawable.ic_favorite_black_48dp);
                             favoriteList.add(id);
                             text = gson.toJson(favoriteList);
-                            pre.edit().putString("favoriteList",text).apply();
+                            pre.edit().putString("Submit/FavoriteList",text).apply();
                         }else if (favoriteList.indexOf(id) != -1) {
                             favButton.setImageResource(R.drawable.ic_favorite_border_black_48dp);
                             favoriteList.removeAll(Collections.singleton(id));
                             text = gson.toJson(favoriteList);
-                            pre.edit().putString("favoriteList",text).apply();
+                            pre.edit().putString("Submit/FavoriteList",text).apply();
                         }
                     }
 
@@ -117,7 +107,7 @@ public class ListAdapter extends BaseAdapter {
         });
         //↑
 
-        holder.dateText.setText(list[position]);
+        dateText.setText(list[position]);
 
         return convertView;
     }
