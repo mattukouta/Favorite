@@ -46,9 +46,4 @@ public class ListFragment extends Fragment {
         return layout;
 
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 }

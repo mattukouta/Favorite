@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.navigation_list:
                 fragment = new ListFragment();
+
                 break;
 
             case R.id.navigation_fab:
