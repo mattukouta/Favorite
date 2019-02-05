@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ArrayList arrayId = gson.fromJson(jsonId, new TypeToken<ArrayList<Integer>>(){}.getType());
         IdArray.id = arrayId;
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -101,6 +101,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         addDialog.ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String text = String.valueOf(addDialog.editText.getText());
+                Log.d("check",text);
+
+                final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                final Gson gson = new Gson();
+                final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
+                Log.d("checkjson",jsonList);
+                ArrayList arrayList = gson.fromJson(jsonList, new TypeToken<ArrayList<String>>(){}.getType());
+                arrayList.add(text);
+                ListArray.list = arrayList;
+                String str = gson.toJson(arrayList);
+                pre.edit().putString("Submit/List",str).apply();
+
                 addDialog.dismiss();
             }
         });
