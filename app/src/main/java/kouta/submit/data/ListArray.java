@@ -3,5 +3,9 @@ package kouta.submit.data;
 import java.util.ArrayList;
 
 public class ListArray {
-    final ArrayList list = new ArrayList();
+    public static ArrayList list = new ArrayList();
+
+    public static ArrayList getList() {
+        return list;
+    }
 }

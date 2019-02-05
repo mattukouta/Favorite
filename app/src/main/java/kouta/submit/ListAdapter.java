@@ -1,6 +1,5 @@
 package kouta.submit;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -12,16 +11,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import kouta.submit.data.IdArray;
+import kouta.submit.data.ListArray;
 
 public class ListAdapter extends BaseAdapter {
 
-    private String[] list={"りんご","みかん","いちご","なし","ぶどう","メロン","スイカ","さくらんぼ","グレープフルーツ","もも","バナナ"};
     private ListFragment listFragment;
 
     public ListAdapter(ListFragment listFragment) {
@@ -31,7 +29,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.length;
+        return ListArray.list.size();
     }
 
     @Override
@@ -56,7 +54,7 @@ public class ListAdapter extends BaseAdapter {
 
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
         final Gson gson = new Gson();
-        final String jsonText = pre.getString("Submit/FavoriteList", "[]");
+        final String jsonText = pre.getString("Submit/Id", "[]");
         Log.d("checkjson",jsonText);
         ArrayList arrayList = gson.fromJson(jsonText, new TypeToken<ArrayList<Integer>>(){}.getType());
         final int id = Integer.parseInt(String.valueOf(position));
@@ -71,7 +69,7 @@ public class ListAdapter extends BaseAdapter {
         favButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String jsonTextButton = pre.getString("Submit/FavoriteList", "[]");
+                String jsonTextButton = pre.getString("Submit/Id", "[]");
                 final ArrayList favoriteList = gson.fromJson(jsonTextButton, new TypeToken<ArrayList<Integer>>(){}.getType());
                 Log.d("checkfavorite", String.valueOf(favoriteList));
                 Animation animation = AnimationUtils.loadAnimation(finalConvertView.getContext(), R.anim.touch);
@@ -83,13 +81,15 @@ public class ListAdapter extends BaseAdapter {
                         if (favoriteList.indexOf(id) == -1) {
                             favButton.setImageResource(R.drawable.ic_favorite_black_48dp);
                             favoriteList.add(id);
+                            IdArray.id = favoriteList;
                             text = gson.toJson(favoriteList);
-                            pre.edit().putString("Submit/FavoriteList",text).apply();
+                            pre.edit().putString("Submit/Id",text).apply();
                         }else if (favoriteList.indexOf(id) != -1) {
                             favButton.setImageResource(R.drawable.ic_favorite_border_black_48dp);
                             favoriteList.removeAll(Collections.singleton(id));
+                            IdArray.id = favoriteList;
                             text = gson.toJson(favoriteList);
-                            pre.edit().putString("Submit/FavoriteList",text).apply();
+                            pre.edit().putString("Submit/Id",text).apply();
                         }
                     }
 
@@ -102,12 +102,13 @@ public class ListAdapter extends BaseAdapter {
 
                     }
                 });
+                Log.d("checkout", String.valueOf(IdArray.id));
                 v.startAnimation(animation);
             }
         });
         //↑
 
-        dateText.setText(list[position]);
+        dateText.setText((CharSequence) ListArray.getList().get(position));
 
         return convertView;
     }
