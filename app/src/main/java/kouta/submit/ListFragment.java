@@ -45,7 +45,6 @@ public class ListFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-//                Toast.makeText(getContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
                 PopupMenu popup = new PopupMenu(getContext(),view);
                 MenuInflater menuInflater = popup.getMenuInflater();
                 menuInflater.inflate(R.menu.popup_menu,popup.getMenu());
@@ -64,6 +63,13 @@ public class ListFragment extends Fragment {
                                 Delete(position);
                                 break;
                         }
+
+                        //fragmentの初期化
+                        ListFragment fragment = new ListFragment();
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .commit();
                         return false;
                     }
                 });
@@ -76,9 +82,11 @@ public class ListFragment extends Fragment {
 
     }
 
+    //popmenuの項目名変更部分
     public void Rename() {
     }
 
+    //popmenuの削除部分
     public void Delete(int position) {
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
         final Gson gson = new Gson();
