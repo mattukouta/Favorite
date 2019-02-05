@@ -2,4 +2,9 @@
     <string name="app_name">Submit</string>
     <string name="list">リスト一覧</string>
     <string name="favorite">お気に入り</string>
+
+    <string name="add_dialog_title">リストの追加</string>
+    <string name="add_dialog_subtitle">リストに追加するものを入力してください</string>
+    <string name="add_dialog_ok">追加する</string>
+    <string name="add_dialog_cancel">キャンセルする</string>
 </resources>
