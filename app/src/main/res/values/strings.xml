@@ -2,7 +2,6 @@
     <string name="app_name">Favorite</string>
     <string name="list">リスト一覧</string>
     <string name="favorite">お気に入り</string>
-
     <string name="add_dialog_title">項目の追加</string>
     <string name="add_dialog_subtitle">リストに追加する項目を入力してください</string>
     <string name="add_dialog_ok">追加</string>

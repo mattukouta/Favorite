@@ -27,7 +27,7 @@ public class ListFragment extends Fragment {
 
     private ListView listView;
     private ListAdapter listAdapter;
-    private AddDialog addDialog;
+    private CustomDialog customDialog;
 
     public ListFragment() {
     }
@@ -42,6 +42,7 @@ public class ListFragment extends Fragment {
         listAdapter = new ListAdapter(ListFragment.this);
         listView.setAdapter(listAdapter);
 
+        //listを長押し時の処理
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -81,23 +82,23 @@ public class ListFragment extends Fragment {
     }
 
     //popmenuの項目名変更部分
-    public void Rename(final int position) {
-        addDialog = new AddDialog(getContext(), getResources().getString(R.string.rename_dialog_title), getResources().getString(R.string.rename_dialog_subtitle)
+    private void Rename(final int position) {
+        customDialog = new CustomDialog(getContext(), getResources().getString(R.string.rename_dialog_title), getResources().getString(R.string.rename_dialog_subtitle)
                 , getResources().getString(R.string.rename_dialog_ok), getResources().getString(R.string.rename_dialog_cancel), getResources().getString(R.string.rename_dialog_hint));
 
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        addDialog.cancel.setOnClickListener(new View.OnClickListener() {
+        customDialog.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDialog.dismiss();
+                customDialog.dismiss();
             }
         });
 
-        addDialog.ok.setOnClickListener(new View.OnClickListener() {
+        customDialog.ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = String.valueOf(addDialog.editText.getText());
+                String text = String.valueOf(customDialog.editText.getText());
                 final Gson gson = new Gson();
                 final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
                 Log.d("checkjson",jsonList);
@@ -108,18 +109,18 @@ public class ListFragment extends Fragment {
                     String str = gson.toJson(arrayList);
                     pre.edit().putString("Submit/List", str).apply();
 
-                    addDialog.dismiss();
+                    customDialog.dismiss();
                 }
             }
         });
 
-        addDialog.setCancelable(false);
-        addDialog.setCanceledOnTouchOutside(true);
-        addDialog.show();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(true);
+        customDialog.show();
     }
 
     //popmenuの削除部分
-    public void Delete(int position) {
+    private void Delete(int position) {
         final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getContext());
         final Gson gson = new Gson();
         final String jsonList = pre.getString("Submit/List", "[\"りんご\",\"みかん\",\"いちご\",\"なし\",\"ぶどう\",\"メロン\",\"スイカ\",\"さくらんぼ\",\"グレープフルーツ\",\"もも\",\"バナナ\"]");
