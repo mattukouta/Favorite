@@ -133,8 +133,18 @@ public class ListFragment extends Fragment {
 
         final String jsonId = pre.getString("Submit/Id", "[]");
         ArrayList arrayId = gson.fromJson(jsonId, new TypeToken<ArrayList<String>>(){}.getType());
+
         arrayId.remove(String.valueOf(position));
         Log.d("checklist", String.valueOf(arrayId));
+
+        for(int n = 0; n < arrayId.size(); n++){
+            int x = Integer.valueOf(String.valueOf(arrayId.get(n)));
+            if(position < x){
+                x = x - 1;
+                arrayId.set(n,x);
+            }
+        }
+
         IdArray.id = arrayId;
         String str2 = gson.toJson(arrayId);
         pre.edit().putString("Submit/Id",str2).apply();

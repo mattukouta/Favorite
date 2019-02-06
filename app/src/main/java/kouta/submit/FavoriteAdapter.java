@@ -42,8 +42,7 @@ public class FavoriteAdapter extends BaseAdapter {
         convertView = mLayoutInflater.inflate(R.layout.favorite_item,null);
         TextView dateText = convertView.findViewById(R.id.text_item);
 
-        dateText.setText((CharSequence) ListArray.getList().get((Integer) IdArray.getId().get(position)));
-
+        dateText.setText(String.valueOf(ListArray.list.get(Integer.valueOf(String.valueOf(IdArray.getId().get(position))))));
 
         return convertView;
     }
