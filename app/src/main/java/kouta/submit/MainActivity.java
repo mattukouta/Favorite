@@ -20,7 +20,7 @@ import kouta.submit.data.ListArray;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private AddDialog addDialog;
+    private CustomDialog customDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 break;
 
-            case R.id.navigation_fab:
+            case R.id.navigation_fav:
                 fragment = new FavoriteFragment();
                 break;
         }
@@ -88,20 +88,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
     private void AddDialog() {
-        addDialog = new AddDialog(this, getResources().getString(R.string.add_dialog_title), getResources().getString(R.string.add_dialog_subtitle)
+        customDialog = new CustomDialog(this, getResources().getString(R.string.add_dialog_title), getResources().getString(R.string.add_dialog_subtitle)
                 , getResources().getString(R.string.add_dialog_ok), getResources().getString(R.string.add_dialog_cancel),getResources().getString(R.string.add_dialog_hint));
 
-        addDialog.cancel.setOnClickListener(new View.OnClickListener() {
+        customDialog.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDialog.dismiss();
+                customDialog.dismiss();
             }
         });
 
-        addDialog.ok.setOnClickListener(new View.OnClickListener() {
+        customDialog.ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = String.valueOf(addDialog.editText.getText());
+                String text = String.valueOf(customDialog.editText.getText());
                 Log.d("check",text);
 
                 final SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     String str = gson.toJson(arrayList);
                     pre.edit().putString("Submit/List", str).apply();
 
-                    addDialog.dismiss();
+                    customDialog.dismiss();
                 }
             }
         });
 
-        addDialog.setCancelable(false);
-        addDialog.setCanceledOnTouchOutside(true);
-        addDialog.show();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(true);
+        customDialog.show();
     }
 }

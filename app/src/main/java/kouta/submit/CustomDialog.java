@@ -7,13 +7,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class AddDialog extends Dialog{
+public class CustomDialog extends Dialog {
 
     public Button cancel;
     public Button ok;
     public EditText editText;
 
-    public AddDialog(Context mContext, String mTitle, String mSubtitle, String mOk, String mCancel, String mHint){
+    public CustomDialog(Context mContext, String mTitle, String mSubtitle, String mOk, String mCancel, String mHint){
         super(mContext);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
